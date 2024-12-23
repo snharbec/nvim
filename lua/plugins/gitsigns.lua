@@ -6,7 +6,7 @@ return {
       signcolumn = true,
       numhl = true,
       linehl = true,
-      word_diff = true,
+      word_diff = false,
       update_debounce = 100,
       current_line_blame = false,
       current_line_blame_opts = {

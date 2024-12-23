@@ -3,7 +3,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     require("fzf-lua").setup({
-      "telescope"
+      "default",
     })
-  end
+  end,
 }
