@@ -1,5 +1,5 @@
 require 'tokyonight'.setup ({
-  style = 'night',
+  style = 'storm',
   transparent = true,
   terminal_colors = true,
   styles = {
@@ -8,5 +8,5 @@ require 'tokyonight'.setup ({
   on_colors = function(colors)
     colors.comments = '#6272a4',
   end,
-  on_highlights = function(highlights, colors) end,
+  on_highlights = function(highlights, colors) end, 
 })

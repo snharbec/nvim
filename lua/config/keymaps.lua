@@ -11,7 +11,8 @@ vim.keymap.set("n", "<leader><leader>", ":FzfLua lgrep_curbuf<CR>")
 vim.keymap.set("n", "<c-p>", "<Plug>(YankyPreviousEntry)")
 vim.keymap.set("n", "<c-n>", "<Plug>(YankyNextEntry)")
 vim.keymap.set("n", "<c-n>", "<Plug>(YankyNextEntry)")
-vim.keymap.set("n", "<CR>", function()
+vim.keymap.set("i", "<M-BS>", "<C-w>")
+vim.keymap.set("n", "<M-CR>", function()
   -- Get the current line number
   local line = vim.fn.line(".")
   -- Get the fold level of the current line
