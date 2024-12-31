@@ -4,10 +4,28 @@ return {
     lazy = false, -- lazy loading handled internally
     dependencies = "rafamadriz/friendly-snippets",
     opts = {
+      completion = {
+        list = {
+          selection = "auto_insert",
+        },
+      },
       keymap = {
-        preset = "super-tab",
+        preset = "default",
         ["<C-y>"] = { "select_and_accept" },
         ["<C-l>"] = { "select_and_accept" },
+        ["<C-j>"] = { "select_next" },
+        ["<C-k>"] = { "select_prev" },
+        ["<Tab>"] = {
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.accept()
+            else
+              return cmp.select_and_accept()
+            end
+          end,
+          "snippet_forward",
+          "fallback",
+        },
       },
     },
   },
