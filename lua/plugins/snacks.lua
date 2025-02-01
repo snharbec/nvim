@@ -9,7 +9,9 @@ return {
     bigfile = { enabled = true },
     notifier = { enabled = true },
     quickfile = { enabled = true },
+    picker = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
+    explorer = { replace_netrw = true },
   },
 }
