@@ -29,6 +29,9 @@ vim.opt.mouse = "a"
 
 vim.opt.tabstop = 2
 
+-- Background
+vim.opt.background = "light"
+
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 -- Sync clipboard between OS and Neovim.
@@ -102,3 +105,11 @@ vim.keymap.set("n", "<leader>wk", "<C-w><C-k>")
 vim.keymap.set("n", "<leader>wo", "<C-w><C-w>")
 vim.keymap.set("n", "<leader>w0", "<C-w><C-q>")
 vim.keymap.set("n", "<leader>w1", "<C-w><C-o>")
+
+-- Cursor Color in insert mode
+-- guibg sets the cursor color; guifg sets the text color under the cursor
+vim.api.nvim_set_hl(0, "MyInsertCursor", { fg = "white", bg = "red" })
+
+-- 2. Apply it to Insert mode (i) and Command-line Insert (ci)
+-- We use 'block' for the shape and 'blinkon0' to stop the blinking
+vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-MyInsertCursor-blinkon1,r-cr-o:hor20"

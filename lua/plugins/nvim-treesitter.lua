@@ -1,7 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   opts = {
-    ensure_installed = "all",
+    ensure_installed = { "all" },
     highlight = {
       enable = true,
       additional_vim_regex_highlighting = false,
@@ -11,7 +11,12 @@ return {
     },
     incremental_selection = {
       enable = true,
+      keymaps = {
+        node_incremental = "v",
+        node_decremental = "V",
+      },
     },
+
     -- textobjects = {
     --   select = {
     --     enable = true,

@@ -4,7 +4,7 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
-      flavour = "mocca",
+      flavour = "latte",
       transparent_background = false,
       show_end_of_buffer = true,
       dim_inactive = {

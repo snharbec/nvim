@@ -1,23 +1,66 @@
 return {
-  "MeanderingProgrammer/markdown.nvim",
-  main = "render-markdown",
-  opts = {
-    bullet = {
-      -- Turn on / off list bullet rendering
+  {
+    "yousefhadder/markdown-plus.nvim",
+    ft = "markdown",
+    opts = {
       enabled = true,
-      -- Replaces '-'|'+'|'*' of 'list_item'
-      -- How deeply nested the list is determines the 'level'
-      -- The 'level' is used to index into the array using a cycle
-      -- If the item is a 'checkbox' a conceal is used to hide the bullet instead
-      icons = { "●", "○", "◆", "◇" },
-      -- Padding to add to the right of bullet point
-      right_pad = 1,
-      -- Highlight for the bullet icon
-      highlight = "RenderMarkdownBullet",
+      features = {
+        list_management = true,
+        text_formatting = true,
+        headers_toc = true,
+        links = true,
+        images = true,
+        quotes = true,
+        callouts = true,
+        code_block = true,
+        table = true,
+        footnotes = true,
+      },
+      toc = {
+        initial_depth = 2,
+      },
+      -- Callouts configuration
+      callouts = {
+        default_type = "NOTE", -- default: "NOTE"  default callout type when inserting
+        custom_types = {}, -- default: {}  add custom types (e.g., { "DANGER", "SUCCESS" })
+      },
+
+      -- Table configuration
+      table = {
+        auto_format = true, -- default: true  auto format table after operations
+        default_alignment = "left", -- default: "left"  alignment used for new columns
+        confirm_destructive = true, -- default: true  confirm before transpose/sort operations
+        keymaps = { -- Table-specific keymaps (prefix based)
+          enabled = true, -- default: true  provide table keymaps
+          prefix = "<leader>t", -- default: "<leader>t"  prefix for table ops
+          insert_mode_navigation = true, -- default: true  Alt+hjkl cell navigation
+        },
+      },
+
+      -- Footnotes configuration
+      footnotes = {
+        section_header = "Footnotes", -- default: "Footnotes"  header for footnotes section
+        confirm_delete = true, -- default: true  confirm before deleting footnotes
+      },
+
+      -- List configuration
+      list = {
+        checkbox_completion = {
+          enabled = false, -- default: false  add timestamps when checking tasks
+          format = "emoji", -- default: "emoji"  timestamp format (see below)
+          date_format = "%Y-%m-%d", -- default: "%Y-%m-%d"  os.date() format string
+          remove_on_uncheck = true, -- default: true  remove timestamp when unchecking
+          update_existing = true, -- default: true  update timestamp when re-checking
+        },
+      },
+
+      -- Global keymap configuration
+      keymaps = {
+        enabled = true, -- default: true  set false to disable ALL default maps (use <Plug>)
+      },
+
+      -- Filetypes configuration
+      filetypes = { "markdown" }, -- default: { "markdown" }
     },
   },
-  name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
-  dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
-  -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-  -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
 }

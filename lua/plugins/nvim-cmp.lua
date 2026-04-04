@@ -7,7 +7,22 @@ return {
       return {}
     end,
   },
-  -- then: setup supertab in cmp
+  {
+    "hrsh7th/nvim-cmp",
+    lazy = false,
+    -- load cmp on InsertEnter
+    event = "InsertEnter",
+    -- these dependencies will only be loaded when cmp loads
+    -- dependencies are always lazy-loaded unless specified otherwise
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+    },
+    config = function()
+      -- ...
+    end,
+  },
+  -- -- then: setup supertab in cmp
   -- {
   --   "hrsh7th/nvim-cmp",
   --   dependencies = {

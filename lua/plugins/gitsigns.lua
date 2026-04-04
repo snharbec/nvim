@@ -5,10 +5,10 @@ return {
     opts = {
       signcolumn = true,
       numhl = true,
-      linehl = true,
+      linehl = false,
       word_diff = false,
       update_debounce = 100,
-      current_line_blame = false,
+      current_line_blame = true,
       current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = "eol", -- 'eol' | 'overlay' | 'underline'

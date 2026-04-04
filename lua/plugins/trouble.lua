@@ -1,6 +1,10 @@
 return {
   "folke/trouble.nvim",
-  opts = {}, -- for default options, refer to the configuration section for custom setup.
+  opts = {
+    auto_preview = true,
+    follow = true,
+    indent_guides = true,
+  }, -- for default options, refer to the configuration section for custom setup.
   cmd = "Trouble",
   keys = {
     {
