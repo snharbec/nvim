@@ -1,0 +1,2 @@
+[submodule "lua/note-type"]
+	url = git@github.com:har/note-type.git

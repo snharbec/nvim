@@ -35,14 +35,27 @@ end
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function(args)
-    vim.lsp.start({
-      name = "iwes",
-      cmd = { "iwes" },
-      root_dir = vim.fs.root(args.buf, { ".iwe" }),
-      flags = {
-        debounce_text_changes = 500,
-      },
-    })
+    -- vim.lsp.start({
+    --   name = "iwes",
+    --   cmd = { "iwes" },
+    --   root_dir = vim.fs.root(args.buf, { ".iwe" }),
+    --   flags = {
+    --     debounce_text_changes = 500,
+    --   },
+    -- })
+    -- vim.opt_local.foldmethod = "expr"
+    -- vim.opt_local.foldtext = "v:lua.cim.treesitter.foldtext()" -- If using Treesitter
+    -- vim.opt_local.foldexpr = "v:lua.cim.treesitter.foldexpr()" -- If using Treesitter
+    -- -- If NOT using Treesitter, use: vim.opt_local.foldmethod = "marker"
+    -- -- or a dedicated markdown plugin.
+    vim.keymap.set("n", "<Tab>", function()
+      -- Check if the current line starts with a Markdown header (#)
+      local line = vim.api.nvim_get_current_line()
+      if line:match("^#+") then
+        return "za"
+      end
+      return "<Tab>"
+    end, { remap = true, expr = true, buffer = true })
   end,
 })
 vim.api.nvim_create_autocmd("LspAttach", {

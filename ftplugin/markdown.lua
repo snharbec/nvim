@@ -8,4 +8,4 @@ vim.opt_local.showbreak = "↪ "
 -- This lets you move "down" within a wrapped paragraph
 vim.keymap.set("n", "j", "gj", { buffer = true, silent = true })
 vim.keymap.set("n", "k", "gk", { buffer = true, silent = true })
-require("note-type.expander").register_smart_inserter()
+require("note_search.expander").register_smart_inserter()

@@ -3,12 +3,8 @@ return {
     "saghen/blink.cmp",
     opts = {
       completion = {
-        trigger = {
-          prefetch_ms = 300,
-        },
-        -- documentation = {
-        --   auto_show = true,
-        --   auto_show_delay = 500,
+        -- trigger = {
+        --   prefetch_ms = 300,
         -- },
         ghost_text = { enabled = true },
         documentation = { auto_show = true, auto_show_delay_ms = 1000 },
@@ -32,33 +28,14 @@ return {
         ["<C-k>"] = { "select_prev" },
         ["<Down>"] = { "select_next", "fallback" },
         ["<Up>"] = { "select_prev", "fallback" },
-        -- ["<C-space>"] = {
-        --   function(cmp)
-        --     cmp.show({ providers = { "snippets" } })
-        --   end,
-        -- },
-        -- ["<Tab>"] = {
-        --   function(cmp)
-        --     if cmp.snippet_active() then
-        --       return cmp.accept()
-        --     else
-        --       return cmp.select_next()
-        --     end
-        --   end,
-        --   "snippet_forward",
-        --   "fallback",
-        -- },
-        -- ["<S-Tab>"] = {
-        --   function(cmp)
-        --     if cmp.snippet_active() then
-        --       return cmp.accept()
-        --     else
-        --       return cmp.select_prev()
-        --     end
-        --   end,
-        --   "snippet_backward",
-        --   "fallback",
-        -- },
+      },
+      -- Configure sources per filetype
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+        per_filetype = {
+          -- For markdown: only use LSP, nothing else
+          markdown = { "lsp" },
+        },
       },
     },
   },

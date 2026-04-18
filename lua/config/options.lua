@@ -8,7 +8,7 @@ vim.g.lazyvim_picker = "snacks"
 vim.opt.tabstop = 4
 vim.g.textwidth = 100
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -55,7 +55,7 @@ vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 600
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -75,6 +75,12 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Folding
+vim.opt.foldcolumn = "1"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -106,6 +112,10 @@ vim.keymap.set("n", "<leader>wo", "<C-w><C-w>")
 vim.keymap.set("n", "<leader>w0", "<C-w><C-q>")
 vim.keymap.set("n", "<leader>w1", "<C-w><C-o>")
 
+-- Undo tree
+vim.cmd("packadd nvim.undotree")
+vim.keymap.set("n", "<leader>U", require("undotree").open)
+
 -- Cursor Color in insert mode
 -- guibg sets the cursor color; guifg sets the text color under the cursor
 vim.api.nvim_set_hl(0, "MyInsertCursor", { fg = "white", bg = "red" })
@@ -113,3 +123,54 @@ vim.api.nvim_set_hl(0, "MyInsertCursor", { fg = "white", bg = "red" })
 -- 2. Apply it to Insert mode (i) and Command-line Insert (ci)
 -- We use 'block' for the shape and 'blinkon0' to stop the blinking
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-MyInsertCursor-blinkon1,r-cr-o:hor20"
+
+vim.opt.isfname:append({ 32 })
+
+-- Experimental UI2: floating cmdline and messages
+vim.opt.cmdheight = 0
+require("vim._core.ui2").enable({
+  enable = true,
+  msg = {
+    targets = {
+      [""] = "msg",
+      empty = "cmd",
+      bufwrite = "msg",
+      confirm = "cmd",
+      emsg = "pager",
+      echo = "msg",
+      echomsg = "msg",
+      echoerr = "pager",
+      completion = "cmd",
+      list_cmd = "pager",
+      lua_error = "pager",
+      lua_print = "msg",
+      progress = "pager",
+      rpc_error = "pager",
+      quickfix = "msg",
+      search_cmd = "cmd",
+      search_count = "cmd",
+      shell_cmd = "pager",
+      shell_err = "pager",
+      shell_out = "pager",
+      shell_ret = "msg",
+      undo = "msg",
+      verbose = "pager",
+      wildlist = "cmd",
+      wmsg = "msg",
+      typed_cmd = "cmd",
+    },
+    cmd = {
+      height = 0.5,
+    },
+    dialog = {
+      height = 0.5,
+    },
+    msg = {
+      height = 0.3,
+      timeout = 5000,
+    },
+    pager = {
+      height = 0.5,
+    },
+  },
+})

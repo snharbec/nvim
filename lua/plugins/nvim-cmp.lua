@@ -19,58 +19,35 @@ return {
       "hrsh7th/cmp-buffer",
     },
     config = function()
-      -- ...
+      local cmp = require("cmp")
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+        }, {
+          { name = "buffer" },
+        }),
+      })
+
+      -- For markdown files: use only LSP, no buffer or other sources
+      cmp.setup.filetype("markdown", {
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+        }),
+      })
     end,
   },
-  -- -- then: setup supertab in cmp
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   dependencies = {
-  --     "hrsh7th/cmp-emoji",
-  --   },
-  --   ---@param opts cmp.ConfigSchema
-  --   opts = function(_, opts)
-  --     local has_words_before = function()
-  --       unpack = unpack or table.unpack
-  --       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  --       return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  --     end
-  --
-  --     -- opts.completion = {
-  --     --   completeopt = "menu,popup,noselect,noinsert",
-  --     --   complete = false,
-  --     -- }
-  --
-  --     local cmp = require("cmp")
-  --     local cmp_select = { behavior = cmp.SelectBehavior.Select }
-  --
-  --     opts.experimental = {
-  --       ghost_text = false,
-  --     }
-  --
-  --     opts.sources = {
-  --       { name = "nvim-lsp" },
-  --       -- { name = "supermaven" },
-  --       { name = "path" },
-  --       { name = "buffer" },
-  --     }
-  --     -- opts.completion = {
-  --     --   -- autocomplete = false,
-  --     -- }
-  --
-  --     opts.mapping = vim.tbl_extend("force", opts.mapping, {
-  --       -- ["<CR>"] = function(fallback)
-  --       --   fallback()
-  --       -- end,
-  --       ["<Tab>"] = cmp.mapping.select_next_item(cmp_select),
-  --       ["<S-Tab>"] = cmp.mapping.select_prev_item(cmp_select),
-  --       ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-  --       ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-  --       ["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
-  --       ["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
-  --       ["<C-l>"] = cmp.mapping.confirm({ select = true }),
-  --       ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-  --     })
-  --   end,
-  -- },
 }
