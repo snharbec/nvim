@@ -1,78 +1,63 @@
--- Keymaps are automatically loaded on the VeryLazy event
+-- Basic keymaps
 
---------------------------------------------------------------------------
--- Helpers for a more concise `<Leader>` mappings.
---------------------------------------------------------------------------
-local nmap = function(lhs, rhs, desc)
-  vim.keymap.set({ "n", "x", "o" }, lhs, rhs, { desc = desc })
-end
-local imap = function(lhs, rhs, desc)
-  vim.keymap.set("i", lhs, rhs, { desc = desc })
-end
-local xmap = function(lhs, rhs, desc)
-  vim.keymap.set("x", lhs, rhs, { desc = desc })
+local function map(mode, lhs, rhs, opts)
+  opts = opts or {}
+  opts.silent = opts.silent ~= false
+  vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-imap("/p", "<C-o>:lua require('extra.daily').insert_link_to_note_type('project')<CR>")
-imap("/e", "<C-o>:lua require('extra.daily').insert_link_to_note_type('person')<CR>")
-imap("/d", "<C-o>:lua require('extra.daily').insert_link_to_note_type('daily')<CR>")
-imap("/c", "<C-o>:lua require('extra.daily').insert_link_to_note_type('company')<CR>")
-imap("/f", "<C-o>:lua require('extra.daily').insert_link_to_file()<CR>")
-imap("/s", "<C-o>:lua require('extra.daily').insert_selection()<CR>")
+-- Leader keys
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
-nmap("<c-p>", "<Plug>(YankyPreviousEntry)")
-nmap("<c-n>", "<Plug>(YankyNextEntry)")
-nmap("<c-n>", "<Plug>(YankyNextEntry)")
-nmap("<M-CR>", function()
-  -- Get the current line number
-  local line = vim.fn.line(".")
-  -- Get the fold level of the current line
-  local foldlevel = vim.fn.foldlevel(line)
-  if foldlevel == 0 then
-    vim.notify("No fold found", vim.log.levels.INFO)
-  else
-    vim.cmd("normal! za")
-  end
-end, "[P]Toggle fold")
-imap("<c-BS>", "<C-w>")
-imap("<c-h>", "<C-w>")
-imap("<M-BS>", "<C-w>")
+-- Better window navigation
+map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
-imap("<Up>", "<C-o>gk")
-imap("<Down>", "<C-o>gj")
+-- Resize windows
+map("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height" })
+map("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
+map("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
+map("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
 
-xmap("<Up>", "<C-o>gk")
-xmap("<Down>", "<C-o>gj")
---------------------------------------------------------------------------
--- Leader keymap
---------------------------------------------------------------------------
-local nmap_leader = function(suffix, rhs, desc)
-  vim.keymap.set("n", "<Leader>" .. suffix, rhs, { desc = desc })
-end
+-- Navigate buffers
+map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
+map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
---------------------------------------------------------------------------
--- Git prefix
---------------------------------------------------------------------------
-nmap_leader("gg", ":Neogit<CR>")
+-- Clear search with <esc>
+map({ "i", "n" }, "<esc>", "<cmd>nohlsearch<CR><Esc>", { desc = "Escape and clear hlsearch" })
 
---------------------------------------------------------------------------
--- Search prefix
---------------------------------------------------------------------------
-nmap_leader("ss", ":lua Snacks.picker.lines()<CR>")
+-- Better indenting
+map("v", "<", "<gv")
+map("v", ">", ">gv")
 
-local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+-- Move lines
+map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
+map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
+map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
+map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
+map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
+map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
--- Repeat movement with ; and ,
--- ensure ; goes forward and , goes backward regardless of the last direction
-vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
-vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+-- Save file
+map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
--- vim way: ; goes to the direction you were moving.
--- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
--- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+-- New file
+map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
--- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
-vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
+-- Quit
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
+
+-- Terminal
+map("n", "<leader>ft", "<cmd>terminal<cr>", { desc = "Terminal" })
+
+-- Insert mode helpers
+map("i", "<C-BS>", "<C-w>", { desc = "Delete word" })
+map("i", "<C-h>", "<C-w>", { desc = "Delete word" })
+map("i", "<M-BS>", "<C-w>", { desc = "Delete word" })
+
+-- Leader keymaps
+map("n", "<leader>gg", ":Neogit<CR>", { desc = "Open Neogit" })
+map("n", "<leader>ss", function() require("snacks").picker.lines() end, { desc = "Search lines" })

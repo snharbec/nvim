@@ -1,30 +1,41 @@
 return {
-  -- Use <tab> for completion and snippets (supertab)
-  -- first: disable default <tab> and <s-tab> behavior in LuaSnip
+  -- LuaSnip for snippets
   {
     "L3MON4D3/LuaSnip",
-    keys = function()
-      return {}
+    version = "v2.*",
+    build = "make install_jsregexp",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
+    config = function()
+      local luasnip = require("luasnip")
+      luasnip.config.setup({
+        history = true,
+        updateevents = "TextChanged,TextChangedI",
+      })
+      -- Load friendly-snippets
+      require("luasnip.loaders.from_vscode").lazy_load()
+      -- Load custom markdown snippets
+      require("luasnip").add_snippets("markdown", require("snippets.markdown"))
     end,
   },
+  -- nvim-cmp for completion
   {
     "hrsh7th/nvim-cmp",
-    lazy = false,
-    -- load cmp on InsertEnter
     event = "InsertEnter",
-    -- these dependencies will only be loaded when cmp loads
-    -- dependencies are always lazy-loaded unless specified otherwise
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
+      "saadparwaiz1/cmp_luasnip",
     },
     config = function()
       local cmp = require("cmp")
+      local luasnip = require("luasnip")
 
       cmp.setup({
         snippet = {
           expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
           end,
         },
         mapping = cmp.mapping.preset.insert({
@@ -33,6 +44,24 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
@@ -42,10 +71,12 @@ return {
         }),
       })
 
-      -- For markdown files: use only LSP, no buffer or other sources
+      -- For markdown files: use LSP, snippets, and buffer
       cmp.setup.filetype("markdown", {
         sources = cmp.config.sources({
+          { name = "luasnip" },
           { name = "nvim_lsp" },
+          { name = "buffer" },
         }),
       })
     end,

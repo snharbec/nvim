@@ -3,28 +3,57 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "folke/lazydev.nvim",
-      ft = "lua", -- only load on lua files
+      ft = "lua",
       opts = {
         library = {
-          -- See the configuration section for more details
-          -- Load luvit types when the `vim.uv` word is found
           { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         },
       },
     },
     config = function()
-      local capabilities = require("blink.cmp").get_lsp_capabilities()
-      require("lspconfig").lua_ls.setup({
+      local lspconfig = require("lspconfig")
+      
+      -- Get capabilities from nvim-cmp if available, otherwise use default
+      local capabilities
+      local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      if ok then
+        capabilities = cmp_nvim_lsp.default_capabilities()
+      else
+        capabilities = vim.lsp.protocol.make_client_capabilities()
+      end
+
+      -- Lua Language Server
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
         settings = {
           Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
             diagnostics = {
               globals = { "vim" },
+            },
+            workspace = {
+              library = {
+                vim.env.VIMRUNTIME,
+                "${3rd}/luv/library",
+              },
+              checkThirdParty = false,
+            },
+            telemetry = {
+              enable = false,
             },
           },
         },
       })
-      require("lspconfig").bashls.setup({})
-      require("lspconfig").markdown_oxide.setup({
+
+      -- Bash Language Server
+      lspconfig.bashls.setup({
+        capabilities = capabilities,
+      })
+
+      -- Markdown Oxide
+      lspconfig.markdown_oxide.setup({
         capabilities = vim.tbl_deep_extend("force", capabilities, {
           workspace = {
             didChangedWatchedFiles = {
@@ -32,16 +61,6 @@ return {
             },
           },
         }),
-        -- on_attach = function()
-        --   -- setup Markdown Oxide daily note commands
-        --   if client.name == "markdown_oxide" then
-        --     vim.api.nvim_create_user_command("Daily", function(args)
-        --       local input = args.args
-        --
-        --       vim.lsp.buf.execute_command({ command = "jump", arguments = { input } })
-        --     end, { desc = "Open daily note", nargs = "*" })
-        --   end
-        -- end,
       })
     end,
   },

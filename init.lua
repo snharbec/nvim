@@ -1,8 +1,11 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
+-- Load options first (before lazy.nvim)
+require("config.options")
+
+-- Bootstrap lazy.nvim and load plugins
 require("config.lazy")
--- require("extra.daily").setup()
 
+-- Load additional configuration
+require("config.keymaps")
+require("config.autocmds")
 
-
-vim.api.nvim_set_hl(0, "MyInsertCursor", { fg = "white", bg = "red" })
-vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-MyInsertCursor-blinkon1,r-cr-o:hor20"
+-- snacks-picker-layouts is loaded on-demand by plugins that need it
