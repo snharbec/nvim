@@ -1,5 +1,18 @@
 -- Autocommands
 
+-- Restore cursor position when opening a file
+vim.api.nvim_create_autocmd("BufReadPost", {
+  desc = "Restore cursor position",
+  group = vim.api.nvim_create_augroup("restore-cursor", { clear = true }),
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
+
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
@@ -19,14 +32,19 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.breakindent = true
     vim.opt_local.showbreak = "↪ "
 
-    -- Fold on headers
+    -- Treesitter-based folding for headers
+    vim.opt_local.foldmethod = "expr"
+    vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.opt_local.foldlevel = 99 -- Start with all folds open
+
+    -- Fold/unfold with Tab on header lines
     vim.keymap.set("n", "<Tab>", function()
       local line = vim.api.nvim_get_current_line()
       if line:match("^#+") then
         return "za"
       end
       return "<Tab>"
-    end, { remap = true, expr = true, buffer = args.buf })
+    end, { remap = true, expr = true, buffer = args.buf, desc = "Toggle fold on header" })
   end,
 })
 
@@ -51,7 +69,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- Document highlighting
     local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
       local highlight_augroup = vim.api.nvim_create_augroup("user-lsp-highlight", { clear = false })
       vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
         buffer = event.buf,
@@ -75,7 +93,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     -- Inlay hints
-    if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
       map("<leader>th", function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
       end, "[T]oggle Inlay [H]ints")

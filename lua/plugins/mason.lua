@@ -1,11 +1,11 @@
 return {
   "williamboman/mason.nvim",
+  lazy = false,
+  priority = 100,
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   },
-  cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
-  build = ":MasonUpdate",
   config = function()
     require("mason").setup({
       ui = {
@@ -23,7 +23,10 @@ return {
 
     -- Mason-lspconfig bridges mason.nvim with nvim-lspconfig
     require("mason-lspconfig").setup({
-      automatic_installation = false,
+      automatic_installation = true,
+      ensure_installed = {
+        "lua_ls",
+      },
     })
   end,
 }

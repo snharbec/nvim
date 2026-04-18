@@ -7,6 +7,9 @@ vim.g.textwidth = 100
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+-- Ask to save unsaved changes when quitting
+vim.opt.confirm = true
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 

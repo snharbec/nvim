@@ -27,7 +27,7 @@ require("lazy").setup({
     version = false,
   },
   install = {
-    colorscheme = { "catppuccin", "habamax" },
+    colorscheme = { "minischeme", "catppuccin", "habamax" },
   },
   checker = { enabled = false },
   -- Disable luarocks support since no plugins require it

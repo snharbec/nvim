@@ -12,8 +12,10 @@ return {
     incremental_selection = {
       enable = true,
       keymaps = {
-        node_incremental = "v",
-        node_decremental = "V",
+        init_selection = "gnn", -- start selection (normal mode)
+        node_incremental = "<M-i>", -- Alt-i: select next child node
+        scope_incremental = "<M-o>", -- Alt-o: expand to parent scope
+        node_decremental = "<M-I>", -- Alt-Shift-i: go back to child
       },
     },
 

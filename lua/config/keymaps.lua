@@ -61,3 +61,14 @@ map("i", "<M-BS>", "<C-w>", { desc = "Delete word" })
 -- Leader keymaps
 map("n", "<leader>gg", ":Neogit<CR>", { desc = "Open Neogit" })
 map("n", "<leader>ss", function() require("snacks").picker.lines() end, { desc = "Search lines" })
+
+-- Buffer management
+map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete buffer" })
+map("n", "<leader>bD", "<cmd>bdelete!<cr>", { desc = "Delete buffer (force)" })
+map("n", "<leader>bw", "<cmd>bwipeout<cr>", { desc = "Wipeout buffer" })
+map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next buffer" })
+map("n", "<leader>bp", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
+map("n", "<leader>bN", "<cmd>enew<cr>", { desc = "New buffer" })
+map("n", "<leader>bl", "<cmd>buffers<cr>", { desc = "List buffers" })
+map("n", "<leader>bf", function() require("snacks").picker.buffers() end, { desc = "Find buffer" })
+

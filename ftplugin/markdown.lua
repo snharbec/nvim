@@ -4,6 +4,11 @@ vim.opt_local.linebreak = true -- Don't break words in the middle
 vim.opt_local.breakindent = true -- Maintain indentation on wrapped lines
 vim.opt_local.showbreak = "↪ "
 
+-- Auto-wrap at 80 characters
+vim.opt_local.textwidth = 100
+vim.opt_local.formatoptions:append("t") -- Auto-wrap text using textwidth
+vim.opt_local.formatoptions:remove("l") -- Allow wrapping long lines in insert mode
+
 -- Remap j and k to move by visual lines, not logical lines
 -- This lets you move "down" within a wrapped paragraph
 vim.keymap.set("n", "j", "gj", { buffer = true, silent = true })

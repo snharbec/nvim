@@ -8,4 +8,5 @@ require("config.lazy")
 require("config.keymaps")
 require("config.autocmds")
 
+vim.cmd.colorscheme("catppuccin")
 -- snacks-picker-layouts is loaded on-demand by plugins that need it
