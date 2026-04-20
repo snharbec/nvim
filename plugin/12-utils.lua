@@ -15,7 +15,8 @@ vim.cmd.packadd('tabout.nvim')
 -- Leap
 local ok_leap, leap = pcall(require, "leap")
 if ok_leap then
-  leap.create_default_mappings()
+  vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
+  vim.keymap.set('n', 'S', '<Plug>(leap-from-window)') 
 end
 
 -- Smear cursor

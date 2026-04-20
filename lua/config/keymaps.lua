@@ -6,10 +6,6 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
--- Leader keys
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
 -- Better window navigation
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })

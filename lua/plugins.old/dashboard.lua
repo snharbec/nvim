@@ -79,11 +79,11 @@ return {
           },
           {
             icon = "",
-            desc = "Lazy",
+            desc = "Lazy2",
             desc_hl = "String",
             key = "l",
             key_hl = "Number",
-            action = "Lazy",
+            action = "Lazy2",
           },
           {
             icon = "",
