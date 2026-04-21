@@ -3,7 +3,8 @@ vim.pack.add({
   "https://codeberg.org/andyg/leap.nvim.git",
   'https://github.com/sphamba/smear-cursor.nvim',
   'https://github.com/aaronik/treewalker.nvim',
-  'https://github.com/abecodes/tabout.nvim'
+  'https://github.com/abecodes/tabout.nvim',
+  'https://github.com/sbulav/jira-oil.nvim'
 })
 
 -- Ensure plugins are loaded with packadd
