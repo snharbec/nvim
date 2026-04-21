@@ -14,3 +14,7 @@ vim.opt_local.formatoptions:remove("l") -- Allow wrapping long lines in insert m
 vim.keymap.set("n", "j", "gj", { buffer = true, silent = true })
 vim.keymap.set("n", "k", "gk", { buffer = true, silent = true })
 require("note_search.expander").register_smart_inserter()
+
+-- Bullets.vim keybindings for list indentation
+vim.keymap.set("i", "<Tab>", "<C-o>:BulletDemote<CR>", { buffer = true, silent = true, desc = "Demote bullet" })
+vim.keymap.set("i", "<S-Tab>", "<C-o>:BulletPromote<CR>", { buffer = true, silent = true, desc = "Promote bullet" })
