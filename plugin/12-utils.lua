@@ -56,6 +56,7 @@ if ok_tabout then
     },
     ignore_beginning = true,
     exclude = {},
+    stop_order = { "forward", "back" },
   })
 end
 

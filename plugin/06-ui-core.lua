@@ -16,35 +16,25 @@ require("nvim-tree").setup({
 })
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree", silent = true })
 
-vim.pack.add({ 'https://github.com/akinsho/bufferline.nvim' })
-require("bufferline").setup({
-  options = {
-    mode = "buffers",
-    numbers = "ordinal",
-    close_command = "bdelete! %d",
-    right_mouse_command = nil,
-    left_mouse_command = nil,
-    middle_mouse_command = nil,
-    indicator = { style = "icon", icon = "▎" },
-    buffer_close_icon = "",
-    modified_icon = "●",
-    close_icon = "",
-    left_trunc_marker = "",
-    right_trunc_marker = "",
-    max_name_length = 30,
-    max_prefix_length = 30,
-    tab_size = 21,
-    diagnostics = false,
-    color_icons = true,
-    show_buffer_icons = true,
-    show_buffer_close_icons = false,
-    show_close_icon = false,
-    show_tab_indicators = true,
-    persist_buffer_sort = true,
-    separator_style = "thin",
-    enforce_regular_tabs = true,
-    always_show_bufferline = false,
-    sort_by = "tabs",
+vim.pack.add({ 'https://github.com/romgrk/barbar.nvim' })
+require("barbar").setup({
+  commands = {
+    next = {
+      action = function(win) vim.api.nvim_win_call(win, function() require("barbar").navigation(1) end) end,
+      shortcut = "n",
+    },
+    previous = {
+      action = function(win) vim.api.nvim_win_call(win, function() require("barbar").navigation(-1) end) end,
+      shortcut = "p",
+    },
+    last = {
+      action = function(win) vim.api.nvim_win_call(win, function() require("barbar").navigation(-10000) end) end,
+      shortcut = "a",
+    },
+    first = {
+      action = function(win) vim.api.nvim_win_call(win, function() require("barbar").navigation(10000) end) end,
+      shortcut = "g",
+    },
   },
 })
 
@@ -106,11 +96,5 @@ require("dashboard").setup({
   },
 })
 
-vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev tab" })
-vim.keymap.set("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next tab" })
-vim.keymap.set("n", "<leader>1", "<cmd>BufferLineGoToBuffer 1<cr>", { desc = "Go to tab 1" })
-vim.keymap.set("n", "<leader>2", "<cmd>BufferLineGoToBuffer 2<cr>", { desc = "Go to tab 2" })
-vim.keymap.set("n", "<leader>3", "<cmd>BufferLineGoToBuffer 3<cr>", { desc = "Go to tab 3" })
-vim.keymap.set("n", "<leader>4", "<cmd>BufferLineGoToBuffer 4<cr>", { desc = "Go to tab 4" })
-vim.keymap.set("n", "<leader>5", "<cmd>BufferLineGoToBuffer 5<cr>", { desc = "Go to tab 5" })
-vim.keymap.set("n", "<leader>$", "<cmd>BufferLineGoToBuffer -1<cr>", { desc = "Go to last tab" })
+vim.keymap.set("n", "H", "<cmd>BufferPrevious<CR>", { desc = "Prev tab" })
+vim.keymap.set("n", "L", "<cmd>BufferNext<CR>", { desc = "Next tab" })
