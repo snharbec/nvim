@@ -68,3 +68,12 @@ map("n", "<leader>bN", "<cmd>enew<cr>", { desc = "New buffer" })
 map("n", "<leader>bl", "<cmd>buffers<cr>", { desc = "List buffers" })
 map("n", "<leader>bf", function() require("snacks").picker.buffers() end, { desc = "Find buffer" })
 
+-- Formatting
+vim.keymap.set({ "n", "v" }, "<leader>bF", function()
+  require("conform").format({
+    lsp_fallback = true,
+    async = false,
+    timeout_ms = 500,
+  })
+end, { desc = "Format Markdown/File" })
+

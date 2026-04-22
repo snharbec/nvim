@@ -5,6 +5,7 @@ vim.pack.add({
   'https://github.com/aaronik/treewalker.nvim',
   'https://github.com/abecodes/tabout.nvim',
   'https://github.com/sbulav/jira-oil.nvim'
+  'https://github.com/stevearc/conform.nvim'
 })
 
 -- Ensure plugins are loaded with packadd
@@ -12,6 +13,7 @@ vim.cmd.packadd('leap.nvim')
 vim.cmd.packadd('smear-cursor.nvim')
 vim.cmd.packadd('treewalker.nvim')
 vim.cmd.packadd('tabout.nvim')
+vim.cmd.packadd('conform.nvim')
 
 -- Leap
 local ok_leap, leap = pcall(require, "leap")
@@ -54,5 +56,15 @@ if ok_tabout then
     },
     ignore_beginning = true,
     exclude = {},
+  })
+end
+
+-- Conform
+local ok_conform, conform = pcall(require, "conform")
+if ok_conform then
+  conform.setup({
+    formatters_by_ft = {
+      markdown = { "prettier"},
+    },
   })
 end
