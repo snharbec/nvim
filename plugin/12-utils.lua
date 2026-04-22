@@ -4,7 +4,7 @@ vim.pack.add({
   'https://github.com/sphamba/smear-cursor.nvim',
   'https://github.com/aaronik/treewalker.nvim',
   'https://github.com/abecodes/tabout.nvim',
-  'https://github.com/sbulav/jira-oil.nvim'
+  'https://github.com/sbulav/jira-oil.nvim',
   'https://github.com/stevearc/conform.nvim'
 })
 
