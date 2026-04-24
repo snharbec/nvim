@@ -18,16 +18,27 @@ local function open_smart()
   if name then
     if name:find("#") then
       Snacks.picker.lsp_definitions()
-    else
-      local notes_dir = vim.env.NOTE_SEARCH_DIR or "~/.local/share/notes"
-      notes_dir = vim.fn.expand(notes_dir)
-      local target = notes_dir .. "/" .. name .. ".md"
+      return
+    end
+
+    local cwd = vim.fn.getcwd()
+    local notes_dir = vim.env.NOTE_SEARCH_DIR or "~/.local/share/notes"
+    notes_dir = vim.fn.expand(notes_dir)
+
+    local variations = {
+      cwd .. "/" .. name,
+      cwd .. "/" .. name .. ".md",
+      notes_dir .. "/" .. name .. ".md",
+    }
+
+    for _, target in ipairs(variations) do
       if vim.fn.filereadable(target) == 1 then
         vim.cmd("edit " .. vim.fn.fnameescape(target))
-      else
-        vim.notify("Note not found: " .. target)
+        return
       end
     end
+
+    vim.notify("Note not found: " .. name)
     return
   end
 

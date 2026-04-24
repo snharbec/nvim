@@ -64,7 +64,7 @@ require("dashboard").setup({
       { desc = ' Conf', group = '@property', action = 'lua Snacks.picker.files({ cwd = vim.fn.stdpath("config") })', key = 'c' },
       { desc = ' Note', group = '@property', action = 'lua Snacks.picker.files({ cwd = os.getenv("NOTE_SEARCH_DIR") })', key = 'n' },
       { desc = ' Updat', group = '@property', action = 'lua vim.pack.update()', key = 'u' },
-      { desc = ' Quit', group = '@property', action = 'qa', key = 'q' },
+      { desc = ' Quit', group = '@property', action = function() vim.api.nvim_input("<cmd>qa<cr>") end, key = 'q' },
     },
     header = {
       "",
