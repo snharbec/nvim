@@ -12,6 +12,12 @@ return {
     i(1),
     t({ "", "```" }),
   }),
+  s(";exec", {
+    t({ "```markdown exec", "" }),
+    t("ls -alrt"),
+    i(1),
+    t({ "", "```" }),
+  }),
   s(";sh", {
     t("Stefan Harbeck"),
   }),
