@@ -57,15 +57,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
     end
 
-    map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-    map("gr", vim.lsp.buf.references, "[G]oto [R]eferences")
-    map("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-    map("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+    -- Use snacks picker for LSP navigation if available, fallback to native
+    local has_snacks = pcall(require, "snacks")
+
+    map("gd", has_snacks and function() Snacks.picker.lsp_definitions() end or vim.lsp.buf.definition, "[G]oto [D]efinition")
+    map("gr", has_snacks and function() Snacks.picker.lsp_references() end or vim.lsp.buf.references, "[G]oto [R]eferences")
+    map("gI", has_snacks and function() Snacks.picker.lsp_implementations() end or vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+    map("gy", has_snacks and function() Snacks.picker.lsp_type_definitions() end or vim.lsp.buf.type_definition, "[G]oto T[y]pe Definition")
+    map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
     map("<leader>ds", vim.lsp.buf.document_symbol, "[D]ocument [S]ymbols")
     map("<leader>ws", vim.lsp.buf.workspace_symbol, "[W]orkspace [S]ymbols")
     map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
     map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-    map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+    map("<leader>so", has_snacks and function() Snacks.picker.lsp_symbols() end or vim.lsp.buf.document_symbol, "LSP [S]ymbols")
+    map("<leader>sO", has_snacks and function() Snacks.picker.lsp_workspace_symbols() end or vim.lsp.buf.workspace_symbol, "LSP [W]orkspace [S]ymbols")
 
     -- Document highlighting
     local client = vim.lsp.get_client_by_id(event.data.client_id)

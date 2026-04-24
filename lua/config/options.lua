@@ -3,7 +3,7 @@
 
 -- Add any additional options here
 vim.opt.tabstop = 2
-vim.g.textwidth = 90
+vim.opt.textwidth = 90
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 

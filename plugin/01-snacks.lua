@@ -86,10 +86,5 @@ vim.keymap.set("n", "<leader>sq", function() Snacks.picker.qflist() end, { desc 
 vim.keymap.set("n", "<leader>uC", function() Snacks.picker.colorschemes() end, { desc = "Colorschemes" })
 vim.keymap.set("n", "<leader>qp", function() Snacks.picker.projects() end, { desc = "Projects" })
 
--- LSP picker keymaps
-vim.keymap.set("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Goto Definition" })
-vim.keymap.set("n", "gr", function() Snacks.picker.lsp_references() end, { desc = "References" })
-vim.keymap.set("n", "gI", function() Snacks.picker.lsp_implementations() end, { desc = "Goto Implementation" })
-vim.keymap.set("n", "gy", function() Snacks.picker.lsp_type_definitions() end, { desc = "Goto T[y]pe Definition" })
-vim.keymap.set("n", "<leader>so", function() Snacks.picker.lsp_symbols() end, { desc = "LSP Symbols" })
-vim.keymap.set("n", "<leader>sO", function() Snacks.picker.lsp_workspace_symbols() end, { desc = "LSP Workspace Symbols" })
+-- LSP picker keymaps are defined in autocmds.lua (LspAttach)
+-- They use Snacks picker when available, with fallback to native LSP

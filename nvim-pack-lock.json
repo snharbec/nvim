@@ -36,6 +36,10 @@
       "rev": "f787e3462c2ee2b6117b17c1aa4ddf66cb6f57fe",
       "src": "https://github.com/nvimdev/dashboard-nvim"
     },
+    "feed.nvim": {
+      "rev": "4e0903343c47b13aa5355ed267dbd58300bff8be",
+      "src": "https://github.com/neo451/feed.nvim"
+    },
     "flash.nvim": {
       "rev": "fcea7ff883235d9024dc41e638f164a450c14ca2",
       "src": "https://github.com/folke/flash.nvim"
@@ -89,7 +93,7 @@
       "src": "https://github.com/folke/noice.nvim"
     },
     "note_search": {
-      "rev": "432de11e43226a8e2b862f8df7103fac22ef3d3a",
+      "rev": "92774491d4901e72b4a67fdbc10ceb5069b38854",
       "src": "https://github.com/snharbec/note_search.git"
     },
     "nui.nvim": {
