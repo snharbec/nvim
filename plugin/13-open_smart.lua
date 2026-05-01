@@ -38,6 +38,24 @@ local function open_smart()
       end
     end
 
+    local matches = vim.fn.glob(notes_dir .. "/**/" .. name .. ".md", 0, 1)
+    if #matches == 1 then
+      vim.cmd("edit " .. vim.fn.fnameescape(matches[1]))
+      return
+    elseif #matches > 1 then
+      vim.ui.select(matches, {
+        prompt = "Note '" .. name .. "' found in multiple locations:",
+        format_item = function(item)
+          return vim.fn.fnamemodify(item, ":~:.")
+        end,
+      }, function(choice)
+        if choice then
+          vim.cmd("edit " .. vim.fn.fnameescape(choice))
+        end
+      end)
+      return
+    end
+
     vim.notify("Note not found: " .. name)
     return
   end
