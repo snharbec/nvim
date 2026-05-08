@@ -60,6 +60,100 @@ local function open_smart()
     return
   end
 
+  -- 1b. Check if cursor is inside a markdown link [text](url)
+  local md_url = nil
+  start_pos, finish_pos = 1, #line
+  while start_pos <= finish_pos do
+    local s, e = line:find("%b[]%b()", start_pos)
+    if not s then break end
+    if s > 1 and line:sub(s - 1, s - 1) == "!" then
+      start_pos = e + 1
+    elseif col >= s - 1 and col <= e - 1 then
+      local ps, pe = line:find("%b()", s)
+      if ps then
+        md_url = line:sub(ps + 1, pe - 1):match("^(%S+)")
+      end
+      break
+    else
+      start_pos = e + 1
+    end
+  end
+
+  if md_url then
+    local path = md_url:match("^([^#]*)") or md_url
+    path = path:match("^(%S+)") or path
+
+    if path:match("^https?://") then
+      local cmd
+      if vim.fn.has("mac") == 1 then
+        cmd = { "open", path }
+      elseif vim.fn.executable("xdg-open") == 1 then
+        cmd = { "xdg-open", path }
+      elseif vim.fn.executable("firefox") == 1 then
+        cmd = { "firefox", path }
+      else
+        vim.notify("No browser found to open: " .. path, vim.log.levels.WARN)
+        return
+      end
+      os.execute(vim.fn.shellescape(cmd[1]) .. " " .. vim.fn.shellescape(cmd[2]) .. " >/dev/null 2>&1 &")
+      return
+    end
+
+    if path:sub(1, 1) == "~" then
+      path = vim.fn.expand(path)
+    end
+
+    if path:sub(1, 1) == "/" then
+      if vim.fn.filereadable(path) == 1 then
+        vim.cmd("edit " .. vim.fn.fnameescape(path))
+      else
+        vim.notify("File not found: " .. path)
+      end
+      return
+    end
+
+    local notes_dir = vim.fn.expand(vim.env.NOTES_DIRECTORY_DIR or vim.env.NOTE_SEARCH_DIR or "~/.local/share/notes")
+    local cwd = vim.fn.getcwd()
+
+    local md_variations = {
+      notes_dir .. "/" .. path,
+      notes_dir .. "/" .. path .. ".md",
+      cwd .. "/" .. path,
+      cwd .. "/" .. path .. ".md",
+    }
+
+    for _, target in ipairs(md_variations) do
+      if vim.fn.filereadable(target) == 1 then
+        vim.cmd("edit " .. vim.fn.fnameescape(target))
+        return
+      end
+    end
+
+    local matches = vim.fn.glob(notes_dir .. "/**/" .. path, 0, 1)
+    if #matches == 0 then
+      matches = vim.fn.glob(notes_dir .. "/**/" .. path .. ".md", 0, 1)
+    end
+    if #matches == 1 then
+      vim.cmd("edit " .. vim.fn.fnameescape(matches[1]))
+      return
+    elseif #matches > 1 then
+      vim.ui.select(matches, {
+        prompt = "Note '" .. path .. "' found in multiple locations:",
+        format_item = function(item)
+          return vim.fn.fnamemodify(item, ":~:.")
+        end,
+      }, function(choice)
+        if choice then
+          vim.cmd("edit " .. vim.fn.fnameescape(choice))
+        end
+      end)
+      return
+    end
+
+    vim.notify("File not found: " .. path)
+    return
+  end
+
   -- Extract the token under cursor by scanning backwards and forwards
   -- Includes alphanumeric, underscore, -, ., :, /, @ (covers words, paths, URLs, JIRA issues)
   local token_chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.:/@"
