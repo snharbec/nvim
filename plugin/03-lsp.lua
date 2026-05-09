@@ -42,6 +42,7 @@ vim.lsp.config("lua_ls", {
         checkThirdParty = false,
       },
       telemetry = { enable = false },
+      codeLens = { enable = true },
     },
   },
 })

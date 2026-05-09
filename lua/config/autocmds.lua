@@ -104,5 +104,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
       end, "[T]oggle Inlay [H]ints")
     end
+
+    -- Codelens
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_codeLens) then
+      map("<leader>cl", vim.lsp.codelens.run, "Run [C]ode[L]ens")
+
+      local codelens_augroup = vim.api.nvim_create_augroup("user-lsp-codelens", { clear = false })
+      vim.api.nvim_create_autocmd({ "BufEnter", "InsertLeave", "CursorHold", "TextChanged" }, {
+        buffer = event.buf,
+        group = codelens_augroup,
+        callback = function()
+          vim.lsp.codelens.refresh({ bufnr = event.buf })
+        end,
+      })
+      vim.lsp.codelens.refresh({ bufnr = event.buf })
+    end
   end,
 })
