@@ -54,14 +54,17 @@ vim.lsp.config("markdown_oxide", {
   }),
 })
 
-vim.lsp.config("marksman", {
+vim.lsp.config("harper_ls", {
   capabilities = capabilities,
-  filetypes = { "markdown", "markdown.mdx" },
-  root_markers = { ".git", ".marksman.toml", "README.md", "readme.md" },
+  settings = {
+    ["harper-ls"] = {
+      isolateEnglish = false,
+    },
+  },
 })
 
 -- Enable servers
-vim.lsp.enable({ "lua_ls", "bashls", "markdown_oxide", "marksman" })
+vim.lsp.enable({ "lua_ls", "bashls", "markdown_oxide", "harper_ls" })
 
 -- Install servers via Mason if not present
 -- Note: mason-lspconfig is not used to avoid the deprecated lspconfig framework warning
