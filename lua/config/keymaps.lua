@@ -56,7 +56,9 @@ map("i", "<M-BS>", "<C-w>", { desc = "Delete word" })
 
 -- Leader keymaps
 map("n", "<leader>gg", ":Neogit<CR>", { desc = "Open Neogit" })
-map("n", "<leader>ss", function() require("snacks").picker.lines() end, { desc = "Search lines" })
+map("n", "<leader>ss", function()
+  require("snacks").picker.lines()
+end, { desc = "Search lines" })
 
 -- Buffer management
 map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete buffer" })
@@ -66,7 +68,9 @@ map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next buffer" })
 map("n", "<leader>bp", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 map("n", "<leader>bN", "<cmd>enew<cr>", { desc = "New buffer" })
 map("n", "<leader>bl", "<cmd>buffers<cr>", { desc = "List buffers" })
-map("n", "<leader>bf", function() require("snacks").picker.buffers() end, { desc = "Find buffer" })
+map("n", "<leader>bf", function()
+  require("snacks").picker.buffers()
+end, { desc = "Find buffer" })
 
 -- Formatting
 vim.keymap.set({ "n", "v" }, "<leader>bF", function()
@@ -77,3 +81,15 @@ vim.keymap.set({ "n", "v" }, "<leader>bF", function()
   })
 end, { desc = "Format Markdown/File" })
 
+-- Trouble
+map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
+map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
+map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
+map(
+  "n",
+  "<leader>xl",
+  "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+  { desc = "LSP Definitions / references (Trouble)" }
+)
+map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
+map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
