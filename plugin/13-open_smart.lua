@@ -1,3 +1,22 @@
+local function smart_open_file(path)
+  local filetype = vim.filetype.match({ filename = path })
+  -- Always check MIME type for external viewer compatibility if it's not a known text filetype
+  local handle = io.popen("file --mime-type " .. vim.fn.shellescape(path))
+  local mime = handle and handle:read("*a") or ""
+  if handle then handle:close() end
+
+  if filetype and filetype ~= "" and mime:find("text/") then
+    vim.cmd("edit " .. vim.fn.fnameescape(path))
+  else
+    if mime:find("text/") then
+      vim.cmd("edit " .. vim.fn.fnameescape(path))
+    else
+      local cmd = vim.fn.has("mac") == 1 and "open" or "xdg-open"
+      os.execute(cmd .. " " .. vim.fn.shellescape(path) .. " >/dev/null 2>&1 &")
+    end
+  end
+end
+
 local function open_smart()
   local line = vim.api.nvim_get_current_line()
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -33,14 +52,14 @@ local function open_smart()
 
     for _, target in ipairs(variations) do
       if vim.fn.filereadable(target) == 1 then
-        vim.cmd("edit " .. vim.fn.fnameescape(target))
+        smart_open_file(target)
         return
       end
     end
 
     local matches = vim.fn.glob(notes_dir .. "/**/" .. name .. ".md", 0, 1)
     if #matches == 1 then
-      vim.cmd("edit " .. vim.fn.fnameescape(matches[1]))
+      smart_open_file(matches[1])
       return
     elseif #matches > 1 then
       vim.ui.select(matches, {
@@ -50,7 +69,7 @@ local function open_smart()
         end,
       }, function(choice)
         if choice then
-          vim.cmd("edit " .. vim.fn.fnameescape(choice))
+          smart_open_file(choice)
         end
       end)
       return
@@ -105,7 +124,7 @@ local function open_smart()
 
     if path:sub(1, 1) == "/" then
       if vim.fn.filereadable(path) == 1 then
-        vim.cmd("edit " .. vim.fn.fnameescape(path))
+        smart_open_file(path)
       else
         vim.notify("File not found: " .. path)
       end
@@ -124,7 +143,7 @@ local function open_smart()
 
     for _, target in ipairs(md_variations) do
       if vim.fn.filereadable(target) == 1 then
-        vim.cmd("edit " .. vim.fn.fnameescape(target))
+        smart_open_file(target)
         return
       end
     end
@@ -134,7 +153,7 @@ local function open_smart()
       matches = vim.fn.glob(notes_dir .. "/**/" .. path .. ".md", 0, 1)
     end
     if #matches == 1 then
-      vim.cmd("edit " .. vim.fn.fnameescape(matches[1]))
+      smart_open_file(matches[1])
       return
     elseif #matches > 1 then
       vim.ui.select(matches, {
@@ -144,7 +163,7 @@ local function open_smart()
         end,
       }, function(choice)
         if choice then
-          vim.cmd("edit " .. vim.fn.fnameescape(choice))
+          smart_open_file(choice)
         end
       end)
       return
@@ -194,7 +213,7 @@ local function open_smart()
   if candidate:find("/") then
     local expanded = vim.fn.expand(candidate)
     if vim.fn.filereadable(expanded) == 1 then
-      vim.cmd("edit " .. vim.fn.fnameescape(expanded))
+      smart_open_file(expanded)
     else
       vim.notify("File not found: " .. expanded)
     end
@@ -226,37 +245,39 @@ local function open_smart()
       vim.notify("fd not found, cannot search", vim.log.levels.WARN)
       return
     end
-    local search_dir = vim.fn.getcwd()
-    local cmd = bin .. " -s -t f "
-      .. vim.fn.shellescape(candidate) .. " "
-      .. vim.fn.shellescape(search_dir)
-    local handle = io.popen(cmd)
-    if handle then
-      local results = {}
-      for line in handle:lines() do
-        table.insert(results, line)
+    local search_dirs = { vim.fn.getcwd(), vim.fn.expand(vim.env.NOTE_SEARCH_DIR or "~/.local/share/notes") }
+    local results = {}
+    for _, dir in ipairs(search_dirs) do
+      local cmd = bin .. " -s -t f "
+        .. vim.fn.shellescape(candidate) .. " "
+        .. vim.fn.shellescape(dir)
+      local handle = io.popen(cmd)
+      if handle then
+        for line in handle:lines() do
+          table.insert(results, line)
+        end
+        handle:close()
       end
-      handle:close()
+    end
 
-      if #results == 1 then
-        vim.cmd("edit " .. vim.fn.fnameescape(results[1]))
-        return
-      elseif #results > 1 then
-        vim.ui.select(results, {
-          prompt = "Open '" .. candidate .. "':",
-          format_item = function(item)
-            return vim.fn.fnamemodify(item, ":p")
-          end,
-        }, function(choice)
-          if choice then
-            vim.cmd("edit " .. vim.fn.fnameescape(choice))
-          end
-        end)
-        return
-      end
-      vim.notify("No file found: " .. candidate, vim.log.levels.WARN)
+    if #results == 1 then
+      smart_open_file(results[1])
+      return
+    elseif #results > 1 then
+      vim.ui.select(results, {
+        prompt = "Open '" .. candidate .. "':",
+        format_item = function(item)
+          return vim.fn.fnamemodify(item, ":p")
+        end,
+      }, function(choice)
+        if choice then
+          smart_open_file(choice)
+        end
+      end)
       return
     end
+    vim.notify("No file found: " .. candidate, vim.log.levels.WARN)
+    return
   end
 
   vim.notify("Nothing to open", vim.log.levels.WARN)
