@@ -64,8 +64,13 @@ vim.lsp.config("harper_ls", {
   },
 })
 
--- Enable servers
-vim.lsp.enable({ "lua_ls", "bashls", "markdown_oxide", "harper_ls" })
+vim.lsp.config("perlnavigator", {
+  capabilities = capabilities,
+  filetypes = { "perl" },
+  root_markers = { ".git", "libs" },
+})
+
+vim.lsp.enable({ "lua_ls", "bashls", "markdown_oxide", "marksman", "perlnavigator" })
 
 -- Install servers via Mason if not present
 -- Note: mason-lspconfig is not used to avoid the deprecated lspconfig framework warning
@@ -75,3 +80,7 @@ vim.api.nvim_create_autocmd("User", {
     vim.notify("Installing LSP servers via Mason...", vim.log.levels.INFO)
   end,
 })
+
+
+-- OR, if you chose PLS
+-- lspconfig.perlpls.setup({}))
