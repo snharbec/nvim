@@ -70,10 +70,25 @@ vim.lsp.config("perlnavigator", {
   root_markers = { ".git", "libs" },
 })
 
-vim.lsp.enable({ "lua_ls", "bashls", "markdown_oxide", "marksman", "perlnavigator" })
+vim.lsp.enable({ "lua_ls", "bashls", "markdown_oxide", "perlnavigator" })
 
 -- Install servers via Mason if not present
 -- Note: mason-lspconfig is not used to avoid the deprecated lspconfig framework warning
+local registry = require("mason-registry")
+registry.refresh(function()
+  for _, pkg_name in ipairs({ "lua-language-server", "bash-language-server", "markdown-oxide", "perlnavigator", "harper-ls" }) do
+    local ok, pkg = pcall(registry.get_package, pkg_name)
+    if ok and not pkg:is_installed() then
+      pkg:install()
+    end
+  end
+  -- Remove marksman if it was previously installed (superseded by markdown-oxide)
+  local ok_m, marksman = pcall(registry.get_package, "marksman")
+  if ok_m and marksman:is_installed() then
+    marksman:uninstall()
+  end
+end)
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "MasonToolsStartingInstall",
   callback = function()

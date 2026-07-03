@@ -24,6 +24,10 @@
       "rev": "cbc7b02bb99fae35cb42f514762b89b5126651ef",
       "src": "https://github.com/hrsh7th/cmp-nvim-lsp"
     },
+    "cmp-path": {
+      "rev": "c642487086dbd9a93160e1679a1327be111cbc25",
+      "src": "https://github.com/hrsh7th/cmp-path"
+    },
     "cmp_luasnip": {
       "rev": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90",
       "src": "https://github.com/saadparwaiz1/cmp_luasnip"
@@ -45,7 +49,7 @@
       "src": "https://github.com/neo451/feed.nvim"
     },
     "fff.nvim": {
-      "rev": "1bb76f6da6872c56ce34df8a2e33e977187be5f9",
+      "rev": "1cd8d31da4c1536be11c4dae0ed61d066e05e87f",
       "src": "https://github.com/dmtrKovalenko/fff.nvim"
     },
     "flash.nvim": {
@@ -57,7 +61,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "gitsigns.nvim": {
-      "rev": "2038c666bd9d8a0b7349a0b6ee00dc83104b9ecf",
+      "rev": "eb60cc7b94c46005237fd34170d76f3a089a90aa",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "guess-indent.nvim": {
@@ -93,15 +97,15 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "bf8169f3e518be8de3f88073ace37d91f576cb04",
+      "rev": "c5cdbadeb423ff724e27a42ab2d1c504d1d6fc5a",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "mini.surround": {
-      "rev": "d401c3856585473693e5ce9ec4c8e5b608b4c0fe",
+      "rev": "a2f644f3759edd3d3f8b6a6d55378408bfe6d290",
       "src": "https://github.com/echasnovski/mini.surround"
     },
     "neogit": {
-      "rev": "5d1b65d6215928e941e1a6a4e76e02fd45ada31f",
+      "rev": "43ea1a0854052e583f647e0b35879f0158a70a78",
       "src": "https://github.com/NeogitOrg/neogit"
     },
     "noice.nvim": {
@@ -109,7 +113,7 @@
       "src": "https://github.com/folke/noice.nvim"
     },
     "note_search": {
-      "rev": "275da578860803732cd2861a65484b9dd9150d68",
+      "rev": "1c5e4762cdf8b6552651bca0ba71bc34cb57bbca",
       "src": "https://github.com/snharbec/note_search.git"
     },
     "nui.nvim": {
@@ -117,7 +121,7 @@
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim": {
-      "rev": "49a926655a2f5579e9c276470fc300baaa49e524",
+      "rev": "e068ab5f8261f23f6f71ffd8791ae40315b77b9c",
       "src": "https://github.com/catppuccin/nvim"
     },
     "nvim-autopairs": {
@@ -133,7 +137,7 @@
       "src": "https://github.com/mfussenegger/nvim-jdtls"
     },
     "nvim-lspconfig": {
-      "rev": "fef8b117ad5fb73943913f444f22065c4b834a60",
+      "rev": "292f44408498103c47996ff5c18fd366293840d8",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
@@ -141,7 +145,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-tree.lua": {
-      "rev": "fb343438d49fba8c35ecc4829d66fca7a1f0ed3d",
+      "rev": "7ff7040bf6c246671eb55cb1727de4fd9f92a106",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
@@ -153,7 +157,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "nvim-web-devicons": {
-      "rev": "dfbfaa967a6f7ec50789bead7ef87e336c1fa63c",
+      "rev": "dad71387de386a946b123079d0e53f23028f3abd",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
@@ -161,7 +165,7 @@
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "orgmode": {
-      "rev": "f5485be9a4301ab535f99f2dc30601c47305dde7",
+      "rev": "f32a06d4b5399dad8bf0478c772bf6c513f02dcf",
       "src": "https://github.com/nvim-orgmode/orgmode"
     },
     "plenary.nvim": {
@@ -173,7 +177,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "1cbbab3a8959bbc1cd136cb1670b75c172073fce",
+      "rev": "24958d97c0e2393339e59404ebe7ee687951ea24",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "smear-cursor.nvim": {
@@ -193,7 +197,7 @@
       "src": "https://github.com/folke/todo-comments.nvim"
     },
     "treewalker.nvim": {
-      "rev": "e1779657d41df2fdf8fd825712051f90e7c9c836",
+      "rev": "cfe3c69396233ddbbd6b581b00868985f78ffd9e",
       "src": "https://github.com/aaronik/treewalker.nvim"
     },
     "trouble.nvim": {

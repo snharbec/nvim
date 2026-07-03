@@ -3,6 +3,7 @@ vim.pack.add({ 'https://github.com/rafamadriz/friendly-snippets' })
 vim.pack.add({ 'https://github.com/hrsh7th/nvim-cmp' })
 vim.pack.add({ 'https://github.com/hrsh7th/cmp-nvim-lsp' })
 vim.pack.add({ 'https://github.com/hrsh7th/cmp-buffer' })
+vim.pack.add({ 'https://github.com/hrsh7th/cmp-path' })
 vim.pack.add({ 'https://github.com/saadparwaiz1/cmp_luasnip' })
 
 local luasnip = require("luasnip")
@@ -31,9 +32,9 @@ cmp.setup({
       if luasnip.jumpable(-1) then luasnip.jump(-1) else fallback() end
     end, { "i", "s" }),
   },
-  sources = cmp.config.sources({ { name = "nvim_lsp" }, { name = "luasnip" } }, { { name = "buffer" } }),
+  sources = cmp.config.sources({ { name = "nvim_lsp" }, { name = "luasnip" } }, { { name = "buffer" }, { name = "path" } }),
 })
 
 cmp.setup.filetype("markdown", {
-  sources = cmp.config.sources({ { name = "luasnip" }, { name = "nvim_lsp" }, { name = "buffer" } }),
+  sources = cmp.config.sources({ { name = "luasnip" }, { name = "nvim_lsp" }, { name = "buffer" } }, { { name = "path" } }),
 })
