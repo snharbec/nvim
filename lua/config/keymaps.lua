@@ -93,3 +93,52 @@ map(
 )
 map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
 map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
+
+-- CodeGraph integration (LSP-like code intelligence)
+map("n", "<leader>cgq", function()
+  vim.ui.input({ prompt = "CodeGraph query: " }, function(input)
+    if input then
+      require("config.codegraph").query(input)
+    end
+  end)
+end, { desc = "CodeGraph query" })
+
+map("n", "<leader>cgc", function()
+  require("config.codegraph").callers()
+end, { desc = "CodeGraph callers" })
+
+map("n", "<leader>cgC", function()
+  require("config.codegraph").callees()
+end, { desc = "CodeGraph callees" })
+
+map("n", "<leader>cgi", function()
+  require("config.codegraph").impact()
+end, { desc = "CodeGraph impact" })
+
+map("n", "<leader>cgn", function()
+  require("config.codegraph").node()
+end, { desc = "CodeGraph node" })
+
+map("n", "<leader>cgs", function()
+  require("config.codegraph").status()
+end, { desc = "CodeGraph status" })
+
+map("n", "<leader>cgI", function()
+  require("config.codegraph").init()
+end, { desc = "CodeGraph init" })
+
+map("n", "<leader>cgS", function()
+  require("config.codegraph").sync()
+end, { desc = "CodeGraph sync" })
+
+map("n", "<leader>cgR", function()
+  require("config.codegraph").reindex()
+end, { desc = "CodeGraph re-index" })
+
+map("n", "<leader>cge", function()
+  vim.ui.input({ prompt = "CodeGraph explore: " }, function(input)
+    if input then
+      require("config.codegraph").explore(input)
+    end
+  end)
+end, { desc = "CodeGraph explore" })
