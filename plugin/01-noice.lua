@@ -1,6 +1,5 @@
 -- Noice should load early as it affects UI
 vim.pack.add({ 'https://github.com/folke/noice.nvim' })
-vim.pack.add({ 'https://github.com/MunifTanjim/nui.nvim' })
 vim.cmd.packadd('noice.nvim')
 vim.cmd.packadd('nui.nvim')
 

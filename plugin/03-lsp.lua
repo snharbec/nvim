@@ -1,9 +1,7 @@
 vim.pack.add({ 'https://github.com/williamboman/mason.nvim' })
-vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
 vim.pack.add({ 'https://github.com/folke/lazydev.nvim' })
 
 vim.cmd.packadd('mason.nvim')
-vim.cmd.packadd('nvim-lspconfig')
 vim.cmd.packadd('lazydev.nvim')
 
 require("mason").setup({
