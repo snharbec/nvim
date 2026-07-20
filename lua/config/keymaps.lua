@@ -94,6 +94,10 @@ map(
 map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
 map("n", "<leader>xq", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
 
+-- Change directory
+-- Maps <leader>cd to set current directory to active file's directory
+vim.keymap.set("n", "<leader>cd", ":cd %:p:h<CR>", { desc = "Change directory to current file" })
+
 -- CodeGraph integration (LSP-like code intelligence)
 map("n", "<leader>cgq", function()
   vim.ui.input({ prompt = "CodeGraph query: " }, function(input)

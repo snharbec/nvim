@@ -109,7 +109,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "9459d7f41ae77d909579dab0aea2bdd3210fac9f",
+      "rev": "a35f08f63b73f0ffac045cd175fb2a22e167c39c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "mini.surround": {
@@ -133,7 +133,7 @@
       "src": "https://github.com/folke/noice.nvim"
     },
     "note_search": {
-      "rev": "881f503b0994112cdd537ea3b2c716f7557b416e",
+      "rev": "34dbc59a9dafb234be5e592820f9addd11cd8d56",
       "src": "https://github.com/snharbec/note_search.git"
     },
     "nui.nvim": {
@@ -141,7 +141,7 @@
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim": {
-      "rev": "05e8787020dcfdb937bf2ff23855ea2415b4e072",
+      "rev": "058e83dc009e4dd62f30807054de9cc849699e27",
       "src": "https://github.com/catppuccin/nvim"
     },
     "nvim-autopairs": {
@@ -169,7 +169,7 @@
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
-      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "rev": "7248feaca45e4d944591497964bc19afa89ad1c6",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -197,7 +197,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "13848c37f9c43de846716f0e75ace9f121385820",
+      "rev": "da46bc90c46171fe1322e1b245b0f2252898bcd8",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "sakura.nvim": {
