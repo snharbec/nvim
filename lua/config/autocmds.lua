@@ -22,6 +22,36 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+-- Auto-set the base directory based on the current buffer.
+-- Walks up from the buffer's file looking for a project marker
+-- (.git, build.xml, pom.xml, Cargo.toml, settings.gradle.kts);
+-- falls back to the directory nvim was started in.
+local project_markers = { ".git", "build.xml", "pom.xml", "Cargo.toml", "settings.gradle.kts" }
+local initial_cwd = vim.fn.getcwd()
+
+local function find_project_root(start)
+  local found = vim.fs.find(project_markers, { upward = true, path = start })
+  if #found == 0 then
+    return nil
+  end
+  return vim.fs.dirname(found[1])
+end
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  desc = "Auto-set base directory based on current buffer",
+  group = vim.api.nvim_create_augroup("auto-base-dir", { clear = true }),
+  callback = function()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    local target = initial_cwd
+    if bufname ~= "" then
+      target = find_project_root(vim.fs.dirname(bufname)) or initial_cwd
+    end
+    if vim.fn.getcwd() ~= target then
+      vim.cmd.cd(target)
+    end
+  end,
+})
+
 -- Filetype specific settings
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "markdown" },
