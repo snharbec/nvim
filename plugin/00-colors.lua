@@ -34,6 +34,7 @@ vim.pack.add({ 'https://github.com/rebelot/kanagawa.nvim' })
 vim.pack.add({ 'https://github.com/rose-pine/neovim' })
 vim.pack.add({ 'https://github.com/EdenEast/nightfox.nvim' })
 vim.pack.add({ 'https://github.com/numToStr/sakura.nvim' })
+vim.pack.add({ 'https://github.com/wtfox/luna.nvim' })
 
 -- Load catppuccin (default fallback)
 vim.cmd.packadd('nvim')
@@ -67,6 +68,9 @@ pcall(function() require("nightfox").setup({}) end)
 
 vim.cmd.packadd('sakura.nvim')
 pcall(function() require("sakura").setup({}) end)
+
+vim.cmd.packadd('luna.nvim')
+pcall(function() require("luna").setup({}) end)
 
 -- Apply saved colorscheme or default to catppuccin
 local saved = read_saved_colorscheme()
