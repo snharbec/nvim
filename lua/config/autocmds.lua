@@ -86,6 +86,69 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Track buffer IDs that have already been recorded as "viewed" in this session,
+-- so re-entering a buffer or re-reading it does not duplicate the history entry.
+local viewed_buffers = {}
+
+-- Record file-viewed / file-modified / file-created events into smarthistory.
+-- - viewed:   BufReadPost fires once per buffer per Neovim session.
+-- - modified: BufWritePost fires when a save wrote to a file that already existed
+--             on disk just before the save.
+-- - created:  BufWritePost fires when a save wrote to a path that did not exist
+--             on disk just before the save (per-session path existence is captured
+--             in BufWritePre).
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+  desc = "smarthistory: record file viewed",
+  group = vim.api.nvim_create_augroup("smarthistory-viewed", { clear = true }),
+  callback = function(args)
+    local buf = args.buf
+    if viewed_buffers[buf] then
+      return
+    end
+    local name = vim.api.nvim_buf_get_name(buf)
+    if name == "" or vim.api.nvim_get_option_value("buftype", { buf = buf }) ~= "" then
+      return
+    end
+    viewed_buffers[buf] = true
+    local path = vim.fn.fnamemodify(name, ":p")
+    vim.system({ "smarthistory", "file", "viewed", path })
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  desc = "smarthistory: stash file existence before save",
+  group = vim.api.nvim_create_augroup("smarthistory-created", { clear = true }),
+  callback = function(args)
+    local name = vim.api.nvim_buf_get_name(args.buf)
+    if name == "" then
+      vim.b[args.buf].smarthistory_existed = nil
+      return
+    end
+    local path = vim.fn.fnamemodify(name, ":p")
+    local stat = vim.uv.fs_stat(path)
+    vim.b[args.buf].smarthistory_existed = stat ~= nil
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  desc = "smarthistory: record file modified or created",
+  group = vim.api.nvim_create_augroup("smarthistory-modified", { clear = true }),
+  callback = function(args)
+    local name = vim.api.nvim_buf_get_name(args.buf)
+    if name == "" then
+      return
+    end
+    local path = vim.fn.fnamemodify(name, ":p")
+    local verb
+    if vim.b[args.buf].smarthistory_existed then
+      verb = "file modified"
+    else
+      verb = "file created"
+    end
+    vim.system({ "smarthistory", "file", verb, path })
+  end,
+})
+
 -- LSP Attach keymaps
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),
