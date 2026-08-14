@@ -67,14 +67,22 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     vim.opt_local.foldlevel = 99 -- Start with all folds open
 
-    -- Fold/unfold with Tab on header lines
+    -- Fold/unfold with Tab on header lines and on list items
+    -- (treesitter's foldexpr already produces a fold for every list_item node,
+    -- so a single `za` on the marker line hides all deeper nesting).
+    local function is_list_item(line)
+      -- Unordered: -, *, + (optionally followed by a task marker like [ ])
+      -- Ordered:   1. 2. ... or 1) 2) ...
+      return line:match("^%s*[-*+]%s") ~= nil or line:match("^%s*%d+[.)]%s") ~= nil
+    end
+
     vim.keymap.set("n", "<Tab>", function()
       local line = vim.api.nvim_get_current_line()
-      if line:match("^#+") then
+      if line:match("^#+") or is_list_item(line) then
         return "za"
       end
-      return "<Tab>"
-    end, { remap = true, expr = true, buffer = args.buf, desc = "Toggle fold on header" })
+      return vim.api.nvim_replace_termcodes("<Tab>", true, false, true)
+    end, { remap = true, expr = true, buffer = args.buf, desc = "Toggle fold on header or list item" })
   end,
 })
 
