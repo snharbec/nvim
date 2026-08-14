@@ -141,9 +141,9 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     local path = vim.fn.fnamemodify(name, ":p")
     local verb
     if vim.b[args.buf].smarthistory_existed then
-      verb = "file modified"
+      verb = "modified"
     else
-      verb = "file created"
+      verb = "created"
     end
     vim.system({ "smarthistory", "file", verb, path })
   end,
