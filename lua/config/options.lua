@@ -124,7 +124,7 @@ vim.api.nvim_set_hl(0, "MyInsertCursor", { fg = "white", bg = "red" })
 -- We use 'block' for the shape and 'blinkon0' to stop the blinking
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-MyInsertCursor-blinkon1,r-cr-o:hor20"
 
-vim.opt.isfname:append({ 32 })
+vim.opt.isfname:append({ "32" })
 
 -- Experimental UI2: floating cmdline and messages
 vim.opt.cmdheight = 0
