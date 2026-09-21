@@ -19,7 +19,7 @@
 - **LUA LSP:** `lazydev.nvim` configured in `lua/config/lazy.lua`; `.luarc.json` disables `deprecated` warning
 - **Completion:** nvim-cmp + LuaSnip + friendly-snippets + cmp-nvim-lsp + cmp-buffer
 - **Main picker:** snacks.nvim (replace with telescope — all keymaps use snacks)
-- **UI:** nvim-tree.lua (sidebar), barbar (tab management), dashboard-nvim (startup), flash.nvim, gitsigns, neogit, noice, trouble, render-markdown, smear-cursor, treewalker, tabout, leap, guess-indent, mini.nvim suite, mini.surround, nvim-surround, bullets.vim, jira-oil
+- **UI:** nvim-tree.lua (sidebar), barbar (tab management), dashboard-nvim (startup), flash.nvim, gitsigns, neogit, noice, trouble, render-markdown, treewalker, tabout, leap, guess-indent, mini.nvim suite, mini.surround, nvim-surround, bullets.vim, jira-oil
 - **LSP servers:** lua_ls, bashls, marksman, markdown_oxide — installed via Mason, **not** mason-lspconfig (avoids deprecated lspconfig framework)
 - **Java:** nvim-jdtls via ftplugin/java.lua — **hardcoded macOS path** (`/Users/har/.local/share/nvim/mason/packages/jdtls`), uses `config_mac` or `config_mac_arm`
 - **Note search:** custom plugin loaded from GitHub (`snharbec/note_search`) via `vim.pack`; uses `NOTE_SEARCH_DIR` env var (default `~/.local/share/notes`); `lua/note-type` git submodule (private repo) is also referenced
