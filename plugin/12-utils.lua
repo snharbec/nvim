@@ -1,7 +1,6 @@
 -- Install and load plugins
 vim.pack.add({
   "https://codeberg.org/andyg/leap.nvim.git",
-  'https://github.com/sphamba/smear-cursor.nvim',
   'https://github.com/aaronik/treewalker.nvim',
   'https://github.com/abecodes/tabout.nvim',
   'https://github.com/sbulav/jira-oil.nvim',
@@ -10,7 +9,6 @@ vim.pack.add({
 
 -- Ensure plugins are loaded with packadd
 vim.cmd.packadd('leap.nvim')
-vim.cmd.packadd('smear-cursor.nvim')
 vim.cmd.packadd('treewalker.nvim')
 vim.cmd.packadd('tabout.nvim')
 vim.cmd.packadd('conform.nvim')
@@ -21,12 +19,6 @@ local ok_leap, leap = pcall(require, "leap")
 if ok_leap then
   vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
   vim.keymap.set('n', 'S', '<Plug>(leap-from-window)') 
-end
-
--- Smear cursor
-local ok_smear, smear = pcall(require, "smear-cursor")
-if ok_smear then
-  smear.setup()
 end
 
 -- Treewalker

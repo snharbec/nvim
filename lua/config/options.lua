@@ -116,13 +116,31 @@ vim.keymap.set("n", "<leader>w1", "<C-w><C-o>")
 vim.cmd("packadd nvim.undotree")
 vim.keymap.set("n", "<leader>U", require("undotree").open)
 
--- Cursor Color in insert mode
--- guibg sets the cursor color; guifg sets the text color under the cursor
-vim.api.nvim_set_hl(0, "MyInsertCursor", { fg = "white", bg = "red" })
+-- Cursor shape + color per mode.
+-- NOTE: in the TUI only the group's background colors the cursor; guifg/ctermfg
+-- are ignored (see |'guicursor'|). :colorscheme runs `hi clear`, which would wipe
+-- these groups, so they are (re)applied on every ColorScheme event.
+local mode_cursor_hl = {
+  CursorNormal = { bg = "#1e66f5" }, -- n-v-c-sm: block
+  CursorInsert = { bg = "#40a02b" }, -- i-ci: vertical bar
+  CursorOverride = { bg = "#d20f39" }, -- r-cr: underline
+}
 
--- 2. Apply it to Insert mode (i) and Command-line Insert (ci)
--- We use 'block' for the shape and 'blinkon0' to stop the blinking
-vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:block-MyInsertCursor-blinkon1,r-cr-o:hor20"
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("mode-cursor-colors", { clear = true }),
+  callback = function()
+    for name, hl in pairs(mode_cursor_hl) do
+      vim.api.nvim_set_hl(0, name, hl)
+    end
+  end,
+})
+
+-- 've' is omitted: it inherits the Visual ('v') entry. 'sm' = showmatch, 'ci' =
+-- command-line insert, 'cr' = command-line replace.
+vim.opt.guicursor = "n-v-c-sm:block-CursorNormal,"
+  .. "i-ci:ver25-CursorInsert-blinkon1,"
+  .. "r-cr:hor20-CursorOverride,"
+  .. "o:hor20"
 
 vim.opt.isfname:append({ "32" })
 
