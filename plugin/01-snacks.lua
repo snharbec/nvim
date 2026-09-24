@@ -61,6 +61,13 @@ vim.keymap.set("n", "<leader><space>", function() Snacks.picker.command_history(
 vim.keymap.set("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
 vim.keymap.set("n", "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, { desc = "Find Config File" })
 vim.keymap.set("n", "<leader>ff", function() Snacks.picker.files({}) end, { desc = "Find Files" })
+vim.keymap.set("n", "<leader>fF", function()
+  -- Capture the word under the cursor before the picker opens, so it comes from
+  -- the source buffer rather than the picker's own input window.
+  -- NOTE: 'pattern' (not 'search') is what seeds the prompt for non-live pickers
+  -- like `files`; 'search' is only displayed when opts.live is true.
+  Snacks.picker.files({ pattern = vim.fn.expand("<cword>") })
+end, { desc = "Find Files (word under cursor)" })
 vim.keymap.set("n", "<leader>fg", function() Snacks.picker.git_files() end, { desc = "Find Git Files" })
 vim.keymap.set("n", "<leader>fr", function() Snacks.picker.recent() end, { desc = "Recent" })
 vim.keymap.set("n", "<leader>fs", function() Snacks.picker.smart() end, { desc = "Smart" })
