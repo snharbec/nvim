@@ -41,7 +41,7 @@
       "src": "https://github.com/nvimdev/dashboard-nvim"
     },
     "doom-one.nvim": {
-      "rev": "beae92173315c7282f6897e666cfd67fbf0f3ac9",
+      "rev": "960d8bf49904001b7cf37fdc34ca18dffb21b024",
       "src": "https://github.com/NTBBloodbath/doom-one.nvim"
     },
     "everforest": {
@@ -49,7 +49,7 @@
       "src": "https://github.com/sainnhe/everforest"
     },
     "feed.nvim": {
-      "rev": "4e0903343c47b13aa5355ed267dbd58300bff8be",
+      "rev": "4d462877da4393510c6771da91c6bdfd0513f455",
       "src": "https://github.com/neo451/feed.nvim"
     },
     "fff.nvim": {
@@ -77,7 +77,7 @@
       "src": "https://github.com/NMAC427/guess-indent.nvim"
     },
     "jira-oil.nvim": {
-      "rev": "2cf777dd818a1b685817ae52d6763819cfb0de1f",
+      "rev": "b0bf5d41db377d1b16c1d8251316b986ab0896a6",
       "src": "https://github.com/sbulav/jira-oil.nvim"
     },
     "jira.nvim": {
@@ -117,7 +117,7 @@
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "mini.surround": {
-      "rev": "8d5d0c5aa92449368ac251e85451d79d8f69d296",
+      "rev": "59ce0acf79e1d930756ef3a7cb4c2369560cf548",
       "src": "https://github.com/echasnovski/mini.surround"
     },
     "neogit": {
@@ -141,7 +141,7 @@
       "src": "https://github.com/snharbec/note_search.git"
     },
     "nui.nvim": {
-      "rev": "de740991c12411b663994b2860f1a4fd0937c130",
+      "rev": "10fc361835c856ba4233ef5ea135b919bf3dce97",
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim": {
@@ -174,10 +174,10 @@
     },
     "nvim-treesitter": {
       "rev": "f603a2f4da48728f80257fb5fbb90145fd1dc173",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+      "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter-context": {
-      "rev": "f3061339b8eaf9fda873600bc425b8d2d8502533",
+      "rev": "8decd73460d26ef0a0befb745d022dd1fc2c38b8",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "nvim-web-devicons": {
@@ -185,7 +185,7 @@
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
-      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
+      "rev": "d3733d933833a0e59b813ecec99341527adf0c28",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "orgmode": {
